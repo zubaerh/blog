@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators} from '@angular/forms';
+import { DataService } from 'src/app/services/data.service';
 
 @Component({
   selector: 'app-register',
@@ -7,6 +8,9 @@ import { FormGroup, FormControl, Validators} from '@angular/forms';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
+  getEmail: any;
+  getPassword: any;
+  constructor(private dataService: DataService) {}
   name= new FormControl('', [
     Validators.required,
     Validators.minLength(3)
@@ -42,5 +46,21 @@ export class RegisterComponent {
     phoneNumber: this.phoneNumber
     
   })
+  onSubmit(){
+    this.getEmail = this.email.value;
+    this.getPassword = this.password.value;
+    console.log(this.getEmail);
+    console.log(this.getPassword);
+    alert('get Input!!!');
+    this.sendDataToLoginComponent();
+  }
+  
+
+  sendDataToLoginComponent() {
+    const email = this.getEmail;
+    const password = this.getPassword;
+    this.dataService.setEmail(email);
+    this.dataService.setPassword(password);
+  }
 
 }
